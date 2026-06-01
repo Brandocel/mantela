@@ -2,100 +2,134 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import type { AboutContent } from "@/features/home/types/home.types";
-import { useInView } from "@/shared/hooks/useInView";
 
-type AboutSectionProps = {
-  content: AboutContent;
-};
+const cb = [0.22, 1, 0.36, 1] as [number, number, number, number];
+const vp = { once: true, margin: "-80px" } as const;
 
-export function AboutSection({ content }: AboutSectionProps) {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const activeTab  = content.tabs[activeTabIndex];
-  const sectionRef = useInView(0.1);
+export function AboutSection({ content }: { content: AboutContent }) {
+  const [active, setActive] = useState(0);
+  const tab = content.tabs[active];
 
   return (
-    <section
-      id="nosotros"
-      ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative bg-white pb-[90px] pt-[60px]"
-    >
-      <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-16 px-6 sm:px-10 lg:grid-cols-[500px_1fr] lg:gap-[64px] lg:px-[80px]">
+    <section id="nosotros" className="relative bg-white">
+      <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-16 px-6 pb-[96px] pt-[96px] sm:px-10 lg:grid-cols-[500px_1fr] lg:gap-[72px] lg:px-[80px]">
 
-        {/* Imagen izquierda */}
-        <div className="reveal-left relative mx-auto h-[540px] w-full max-w-[480px] lg:mx-0">
+        {/* ── Imagen izquierda ─────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={vp}
+          transition={{ duration: 0.9, ease: cb }}
+          className="relative mx-auto h-[540px] w-full max-w-[480px] lg:mx-0"
+        >
           {/* Fondo morado */}
-          <div className="absolute left-[36px] top-[-24px] h-[548px] w-[400px] rounded-tl-[100px] rounded-tr-[80px] rounded-br-[12px] rounded-bl-[6px] bg-[#C9B0F4]" />
+          <div className="absolute left-[34px] top-[-22px] h-[548px] w-[406px] rounded-tl-[96px] rounded-tr-[72px] rounded-br-[12px] rounded-bl-[6px] bg-[#C9B0F4]" />
+
           {/* Figura rosa */}
-          <div className="absolute right-[-8px] top-[140px] h-[290px] w-[170px] rounded-l-full rounded-r-[20px] bg-[#DF78BE]" />
-          {/* Imagen */}
-          <div className="absolute left-0 top-0 h-[524px] w-[390px] overflow-hidden rounded-[4px] bg-slate-100 shadow-[0_22px_55px_rgba(15,23,42,0.14)] sm:w-[405px] lg:w-[405px]">
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute right-[-6px] top-[140px] h-[288px] w-[168px] rounded-l-full rounded-r-[20px] bg-[#DF78BE]"
+          />
+
+          {/* Imagen principal */}
+          <div className="absolute left-0 top-0 h-[524px] w-[390px] overflow-hidden rounded-[6px] bg-slate-100 shadow-[0_24px_64px_rgba(0,0,0,0.15)] sm:w-[405px] lg:w-[405px]">
             <Image
               src={content.image}
               alt={content.imageAlt}
               fill
-              sizes="(max-width: 1024px) 90vw, 405px"
+              sizes="(max-width:1024px) 90vw, 405px"
               className="object-cover object-center transition-transform duration-700 hover:scale-[1.04]"
             />
           </div>
-          {/* Cuadro morado inferior */}
-          <span className="absolute bottom-[-28px] right-[24px] h-[22px] w-[22px] rounded-[6px] bg-[#8B4CE6]" />
-        </div>
 
-        {/* Contenido derecho */}
-        <div className="reveal-right relative">
-          <span className="absolute right-[18px] top-[10px] hidden h-[18px] w-[18px] rounded-full bg-[#69C348] lg:block" />
+          {/* Cuadro decorativo */}
+          <motion.span
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="absolute bottom-[-26px] right-[22px] h-[22px] w-[22px] rounded-[6px] bg-[#8B4CE6]"
+          />
+        </motion.div>
 
-          <h2 className="max-w-[580px] text-[40px] font-[500] leading-[1.1] tracking-[-0.04em] text-[#282828] sm:text-[50px] sm:leading-[1.08]">
-            <span className="block">Pasión por la</span>
-            <span className="block">Lavandería Industrial</span>
-          </h2>
-
-          {/* Tabs */}
-          <div className="mt-[34px] flex flex-wrap items-center gap-x-[34px] gap-y-4">
-            {content.tabs.map((tab, index) => {
-              const isActive = index === activeTabIndex;
-              return (
-                <button
-                  key={tab.label}
-                  type="button"
-                  onClick={() => setActiveTabIndex(index)}
-                  className={`relative pb-[10px] text-left text-[17px] font-[600] leading-6 transition-colors duration-300 ${
-                    isActive ? "text-[#EF4B91]" : "text-[#282828] hover:text-[#EF4B91]"
-                  }`}
-                >
-                  {tab.label}
-                  <span
-                    className={`absolute bottom-0 left-0 h-[3px] w-full rounded-full bg-[#EF4B91] transition-opacity duration-300 ${
-                      isActive ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Descripción */}
-          <p className="mt-[40px] max-w-[580px] text-[15px] font-normal leading-[26px] text-[#545454]">
-            {activeTab.description}
+        {/* ── Contenido derecho ────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, x: 36 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={vp}
+          transition={{ duration: 0.85, ease: cb, delay: 0.1 }}
+          className="relative"
+        >
+          {/* Eyebrow */}
+          <p className="mb-5 flex items-center gap-[10px] text-[11px] font-[800] uppercase tracking-[0.18em] text-[#EF4B91]">
+            <span className="h-[2px] w-[22px] rounded-full bg-[#EF4B91]" />
+            Nuestra identidad
           </p>
 
-          {/* Lista */}
-          <ul className="mt-[36px] space-y-[24px]">
-            {activeTab.points.map((point) => (
-              <li key={point} className="flex items-center gap-[16px]">
-                <span className="flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-full bg-[#EF4B91]/10">
-                  <svg viewBox="0 0 16 16" fill="none" className="h-[14px] w-[14px]" aria-hidden>
-                    <path d="M3 8.5L6.5 12L13 5" stroke="#EF4B91" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
-                <span className="text-[17px] font-[600] leading-[24px] text-[#282828]">
-                  {point}
-                </span>
-              </li>
+          <h2 className="max-w-[540px] text-[38px] font-[800] leading-[1.12] tracking-[-0.04em] text-[#1a1a1a] sm:text-[48px]">
+            <span className="block">Pasión por la</span>
+            <span className="block">
+              Lavandería{" "}
+              <span className="relative inline-block text-[#EF4B91]">
+                Industrial
+                <span className="absolute -bottom-[4px] left-0 h-[3px] w-full rounded-full bg-[#EF4B91]/30" />
+              </span>
+            </span>
+          </h2>
+
+          {/* Tabs como pills */}
+          <div className="mt-8 flex flex-wrap gap-2">
+            {content.tabs.map((t, i) => (
+              <button
+                key={t.label}
+                type="button"
+                onClick={() => setActive(i)}
+                className={`rounded-full px-5 py-[9px] text-[13px] font-[700] transition-all duration-250 ${
+                  i === active
+                    ? "bg-[#EF4B91] text-white shadow-[0_6px_18px_rgba(239,75,145,0.32)]"
+                    : "bg-[#f5f5f5] text-[#555] hover:bg-[#ffe8f3] hover:text-[#EF4B91]"
+                }`}
+              >
+                {t.label}
+              </button>
             ))}
-          </ul>
-        </div>
+          </div>
+
+          {/* Contenido del tab — AnimatePresence */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.32, ease: "easeOut" }}
+            >
+              <p className="mt-8 max-w-[540px] text-[14px] leading-[26px] text-[#666]">
+                {tab.description}
+              </p>
+
+              <ul className="mt-7 space-y-[18px]">
+                {tab.points.map((point, i) => (
+                  <motion.li
+                    key={point}
+                    initial={{ opacity: 0, x: -14 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.35, ease: cb, delay: i * 0.07 }}
+                    className="flex items-center gap-4"
+                  >
+                    <span className="flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-full bg-[#EF4B91]/12">
+                      <svg viewBox="0 0 16 16" fill="none" className="h-[13px] w-[13px]" aria-hidden>
+                        <path d="M3 8.5L6.5 12L13 5" stroke="#EF4B91" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    <span className="text-[15px] font-[600] text-[#1a1a1a]">{point}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

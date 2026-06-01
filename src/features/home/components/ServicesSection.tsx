@@ -1,108 +1,139 @@
 "use client";
 
 import Image from "next/image";
-import type {
-  ServiceItem,
-  ServicesContent,
-} from "@/features/home/types/home.types";
-import { useInView } from "@/shared/hooks/useInView";
+import { motion } from "framer-motion";
+import type { ServiceItem, ServicesContent } from "@/features/home/types/home.types";
 
-type ServicesSectionProps = {
-  content: ServicesContent;
+const cb = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
+const vp = { once: true, margin: "-80px" } as const;
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.11 } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.7, ease: cb } },
 };
 
-function ServiceCard({
-  service,
-  featured = false,
-}: {
-  service: ServiceItem;
-  featured?: boolean;
-}) {
+function ServiceCard({ service, featured = false }: { service: ServiceItem; featured?: boolean }) {
   return (
-    <article
-      className={`group relative flex gap-5 transition-all duration-300 ${
+    <motion.article
+      variants={fadeUp}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className={`group relative flex gap-5 overflow-hidden rounded-2xl transition-shadow duration-300 ${
         featured
-          ? "rounded-[14px] bg-white px-6 py-6 shadow-[0_18px_45px_rgba(15,23,42,0.09)]"
-          : "px-2 py-4"
+          ? "bg-white p-7 shadow-[0_6px_28px_rgba(0,0,0,0.07)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.11)]"
+          : "p-5 hover:bg-[#fafafa]"
       }`}
     >
-      <div className="relative mt-1 h-[38px] w-[38px] shrink-0">
+      {/* Barra de acento izquierda en featured */}
+      {featured && (
+        <span className="absolute left-0 top-7 bottom-7 w-[3px] rounded-r-full bg-[#75CF45]" />
+      )}
+
+      {/* Ícono con fondo */}
+      <motion.div
+        whileHover={{ scale: 1.12, rotate: 4 }}
+        transition={{ duration: 0.25 }}
+        className={`relative mt-[2px] h-[44px] w-[44px] shrink-0 overflow-hidden rounded-xl ${
+          featured ? "bg-[#75CF45]/10" : "bg-[#f5f5f5]"
+        }`}
+      >
         <Image
           src={service.icon}
           alt={service.iconAlt}
           fill
-          sizes="38px"
-          className="object-contain transition-transform duration-300 group-hover:scale-110"
+          sizes="44px"
+          className="object-contain p-2"
         />
-      </div>
+      </motion.div>
+
       <div>
-        <h3 className="text-[19px] font-[600] leading-[24px] tracking-[-0.02em] text-[#282828]">
+        <h3 className="text-[17px] font-[700] leading-[23px] tracking-[-0.02em] text-[#1a1a1a]">
           {service.title}
         </h3>
-        <p className="mt-[8px] max-w-[340px] text-[15px] font-normal leading-[24px] text-[#545454]">
+        <p className="mt-[7px] max-w-[340px] text-[13px] leading-[21px] text-[#666]">
           {service.description}
         </p>
       </div>
-    </article>
+    </motion.article>
   );
 }
 
-export function ServicesSection({ content }: ServicesSectionProps) {
-  const [firstService, secondService, thirdService] = content.items;
-  const sectionRef = useInView();
+export function ServicesSection({ content }: { content: ServicesContent }) {
+  const [first, second, third] = content.items;
 
   return (
-    <section
-      id="servicios"
-      ref={sectionRef as React.RefObject<HTMLElement>}
-      className="relative bg-white"
-    >
-      <div className="mx-auto w-full max-w-[1280px] px-6 pb-[72px] pt-[38px] sm:px-10 lg:px-[48px]">
+    <section id="servicios" className="relative bg-white">
+      <div className="mx-auto w-full max-w-[1280px] px-6 pb-[96px] pt-[96px] sm:px-10 lg:px-[64px]">
 
-        {/* Título */}
-        <div className="reveal relative">
-          <h2 className="text-[52px] font-[500] leading-none tracking-[-0.04em] text-[#282828] sm:text-[62px]">
+        {/* Header de sección */}
+        <motion.div
+          initial="hidden" whileInView="show" viewport={vp} variants={stagger}
+          className="mb-[56px]"
+        >
+          <motion.p variants={fadeUp} className="mb-3 flex items-center gap-[10px] text-[11px] font-[800] uppercase tracking-[0.18em] text-[#75CF45]">
+            <span className="h-[2px] w-[22px] rounded-full bg-[#75CF45]" />
+            Lo que ofrecemos
+          </motion.p>
+          <motion.h2 variants={fadeUp} className="text-[46px] font-[800] leading-[1.1] tracking-[-0.04em] text-[#1a1a1a] sm:text-[58px]">
             {content.title}
-          </h2>
-          <span className="absolute left-[390px] top-[12px] hidden h-[22px] w-[22px] rounded-[6px] bg-[#8B4CE6] lg:block" />
-        </div>
+          </motion.h2>
+        </motion.div>
 
-        {/* Contenido superior */}
-        <div className="relative mt-[72px] grid grid-cols-1 gap-10 lg:grid-cols-[464px_1fr] lg:gap-[44px]">
+        {/* Grid principal */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[448px_1fr] lg:gap-[52px]">
 
           {/* Imagen izquierda */}
-          <div className="reveal-left relative h-[310px] overflow-hidden rounded-[12px] bg-slate-100 shadow-[0_18px_45px_rgba(15,23,42,0.08)] lg:h-[298px]">
+          <motion.div
+            initial={{ opacity: 0, x: -36 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={vp}
+            transition={{ duration: 0.85, ease: cb }}
+            className="relative h-[320px] overflow-hidden rounded-2xl bg-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.10)] lg:h-[330px]"
+          >
             <Image
               src={content.image}
-              alt="Servicio profesional de lavandería industrial"
+              alt="Servicio profesional de lavandería"
               fill
-              sizes="(max-width: 1024px) 100vw, 464px"
-              className="object-cover object-center transition-transform duration-700 hover:scale-105"
+              sizes="(max-width:1024px) 100vw, 448px"
+              className="object-cover object-center transition-transform duration-700 hover:scale-[1.04]"
             />
-          </div>
+            {/* Overlay sutil */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+          </motion.div>
 
-          {/* Servicios derecha */}
-          <div className="reveal-right relative lg:-mt-[110px]">
-            <div className="relative max-w-[520px] space-y-[18px] lg:ml-[4px]">
-              {firstService && <ServiceCard service={firstService} featured />}
-              {secondService && <ServiceCard service={secondService} />}
-              {thirdService && <ServiceCard service={thirdService} />}
-            </div>
-            <span className="absolute right-[58px] top-[110px] hidden h-[17px] w-[30px] rounded-b-full rounded-t-[5px] bg-[#EF4B91] lg:block" />
-            <span className="absolute bottom-[18px] left-[-6px] hidden h-[14px] w-[14px] rounded-full bg-[#69C348] lg:block" />
-          </div>
+          {/* Cards de servicios */}
+          <motion.div
+            initial="hidden" whileInView="show" viewport={vp} variants={stagger}
+            className="flex flex-col justify-center gap-3 lg:-mt-[100px]"
+          >
+            {first  && <ServiceCard service={first}  featured />}
+            {second && <ServiceCard service={second} />}
+            {third  && <ServiceCard service={third}  />}
+          </motion.div>
         </div>
 
-        {/* Imagen banner inferior */}
-        <div className="reveal relative mt-[40px] h-[300px] overflow-hidden rounded-[8px] bg-slate-100 shadow-[0_20px_50px_rgba(15,23,42,0.10)] sm:h-[380px] lg:h-[340px]">
+        {/* Banner inferior */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={vp}
+          transition={{ duration: 0.8, ease: cb }}
+          className="group relative mt-[44px] h-[260px] overflow-hidden rounded-2xl bg-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.10)] sm:h-[340px] lg:h-[310px]"
+        >
           <Image
             src={content.bannerImage}
             alt="Área industrial de lavandería La Mantela"
             fill
-            sizes="(max-width: 1024px) 100vw, 1184px"
-            className="object-cover object-center transition-transform duration-700 hover:scale-[1.03]"
+            sizes="(max-width:1024px) 100vw, 1184px"
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
           />
-        </div>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent" />
+        </motion.div>
       </div>
     </section>
   );
