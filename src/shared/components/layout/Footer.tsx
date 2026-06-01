@@ -62,7 +62,7 @@ export function Footer({ navItems }: { navItems: NavItem[] }) {
           whileTap={{ scale: 0.97 }}
           className="relative h-[90px] w-[170px]"
         >
-          <Image src="/images/logomantela.png" alt="La Mantela" fill sizes="170px"
+          <Image src="/images/logofooter.png" alt="La Mantela" fill sizes="170px"
             className="object-contain brightness-0 invert opacity-85" />
         </motion.a>
 
