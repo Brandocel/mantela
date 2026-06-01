@@ -114,6 +114,38 @@ export const homeContent: HomeContent = {
       },
     ],
   },
+  experience: {
+    years: 15,
+    title: "15+ Años de Experiencia Industrial",
+    description: "Empresas de hospitalidad, salud y gastronomía confían en nuestros procesos para mantener sus textiles en condiciones impecables.",
+    logos: [
+      { name: "Hotel Grand Reef",    category: "Hotelería"      },
+      { name: "Casa Restaurante",    category: "Gastronomía"    },
+      { name: "Spa Tulum Resort",    category: "Bienestar"      },
+      { name: "Clínica del Valle",   category: "Salud"          },
+      { name: "Marriott Hotels",     category: "Hotelería"      },
+      { name: "Azul Hospitality",    category: "Hotelería"      },
+      { name: "Grupo Coral",         category: "Restaurantes"   },
+      { name: "Royal Service Co.",   category: "Corporativo"    },
+      { name: "Oasis Wellness",      category: "Bienestar"      },
+      { name: "Centro Médico Sur",   category: "Salud"          },
+      { name: "Hacienda Real",       category: "Hotelería"      },
+      { name: "Boca Marina",         category: "Gastronomía"    },
+    ],
+  },
+
+  certifications: {
+    title: "Calidad Certificada",
+    description: "Nuestros procesos cumplen con los más altos estándares de calidad, seguridad e higiene del sector industrial.",
+    items: [
+      { name: "ISO 9001",        subtitle: "Gestión de Calidad",     icon: "iso"     },
+      { name: "Calidad Premium", subtitle: "Procesos Verificados",   icon: "quality" },
+      { name: "Eco Responsable", subtitle: "Impacto Ambiental",      icon: "eco"     },
+      { name: "Seguridad IMSS",  subtitle: "Higiene Industrial",     icon: "safety"  },
+      { name: "Confianza B2B",   subtitle: "Servicio Empresarial",   icon: "trust"   },
+    ],
+  },
+
   cta: {
     title: "Contactar por WhatsApp",
     description:

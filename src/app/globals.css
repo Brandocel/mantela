@@ -20,6 +20,19 @@
 html  { scroll-behavior: smooth; }
 body  { background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
 
+/* Marquee logos — Emil: CSS animation para predetermined motion */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation-play-state: paused; }
+}
+
 /* Live badge ping */
 @keyframes ping {
   75%, 100% { transform: scale(2.2); opacity: 0; }

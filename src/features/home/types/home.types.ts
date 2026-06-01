@@ -58,13 +58,39 @@ export type NavItem = {
     buttonLabel: string;
     buttonHref: string;
   };
-  
+
+  export type IndustryLogo = {
+    name: string;
+    category: string;
+  };
+
+  export type ExperienceContent = {
+    years: number;
+    title: string;
+    description: string;
+    logos: IndustryLogo[];
+  };
+
+  export type Certification = {
+    name: string;
+    subtitle: string;
+    icon: "iso" | "quality" | "eco" | "safety" | "trust";
+  };
+
+  export type CertificationsContent = {
+    title: string;
+    description: string;
+    items: Certification[];
+  };
+
   export type HomeContent = {
     navItems: NavItem[];
     footerNavItems: NavItem[];
     hero: HeroContent;
     services: ServicesContent;
+    experience: ExperienceContent;
     process: ProcessContent;
     about: AboutContent;
+    certifications: CertificationsContent;
     cta: CTAContent;
   };
