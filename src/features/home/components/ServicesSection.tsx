@@ -7,42 +7,29 @@ import type { ServiceItem, ServicesContent } from "@/features/home/types/home.ty
 const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
 const VP   = { once: true, margin: "-80px" } as const;
 
-/* Emil: stagger 50ms, desde scale(0.96) no scale(0) */
-const list = { hidden: {}, show: { transition: { staggerChildren: 0.05 } } };
-const item = {
-  hidden: { opacity: 0, y: 20, scale: 0.98 },
-  show:   { opacity: 1, y: 0,  scale: 1, transition: { duration: 0.65, ease: EASE } },
-};
-
 function ServiceCard({ service, featured = false }: { service: ServiceItem; featured?: boolean }) {
   return (
     <motion.article
-      variants={item}
-      /* Emil: hover sólo transform+opacity, active:scale */
-      whileHover={{ y: -3 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
-      className={`group relative flex gap-5 rounded-2xl outline-none transition-shadow duration-200 ${
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={VP}
+      transition={{ duration: 0.6, ease: EASE }}
+      className={`group flex gap-5 rounded-xl transition-all duration-200 ${
         featured
-          ? "bg-white p-6 shadow-[0_2px_12px_rgba(15,23,42,0.06),0_0_0_1px_#E2E8F0] hover:shadow-[0_12px_40px_rgba(15,23,42,0.10),0_0_0_1px_#CBD5E1]"
+          ? "relative bg-white p-6 shadow-[0_2px_16px_rgba(15,23,42,0.06),0_0_0_1px_#E2E8F0] hover:shadow-[0_8px_32px_rgba(15,23,42,0.09),0_0_0_1px_#CBD5E1]"
           : "p-5 hover:bg-[#F8FAFC]"
       }`}
     >
-      {/* Barra acento izquierda en featured */}
       {featured && (
-        <span className="absolute left-0 top-5 bottom-5 w-[3px] rounded-r-full bg-[#16A34A]" />
+        <span className="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full bg-[#16A34A]" />
       )}
 
-      {/* Ícono con bg — Emil: scale con transform, rotate sutil */}
-      <motion.div
-        whileHover={{ scale: 1.08, rotate: 3 }}
-        transition={{ duration: 0.18, ease: "easeOut" }}
-        className={`relative mt-[2px] h-[42px] w-[42px] shrink-0 overflow-hidden rounded-xl ${
-          featured ? "bg-[#DCFCE7]" : "bg-[#F1F5F9]"
-        }`}
-      >
-        <Image src={service.icon} alt={service.iconAlt} fill sizes="42px" className="object-contain p-2" />
-      </motion.div>
+      {/* Ícono — sin rotación en hover, sobrio */}
+      <div className={`relative mt-[2px] h-[40px] w-[40px] shrink-0 overflow-hidden rounded-lg ${
+        featured ? "bg-[#F0FDF4]" : "bg-[#F8FAFC]"
+      }`}>
+        <Image src={service.icon} alt={service.iconAlt} fill sizes="40px" className="object-contain p-2" />
+      </div>
 
       <div>
         <h3 className="text-[15px] font-[700] leading-[21px] tracking-[-0.02em] text-[#0F172A]">
@@ -60,63 +47,66 @@ export function ServicesSection({ content }: { content: ServicesContent }) {
   const [first, second, third] = content.items;
 
   return (
-    <section id="servicios" className="relative bg-white">
+    <section id="servicios" className="bg-white">
       <div className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-24 sm:px-8 lg:px-16">
 
         {/* Header */}
         <motion.div
-          initial="hidden" whileInView="show" viewport={VP} variants={list}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={VP}
+          transition={{ duration: 0.6, ease: EASE }}
           className="mb-14"
         >
-          <motion.p variants={item} className="mb-3 flex items-center gap-[10px] text-[10px] font-[800] uppercase tracking-[0.22em] text-[#16A34A]">
+          <p className="mb-3 flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#16A34A]">
             <span className="h-px w-[20px] bg-[#16A34A]" />
             Soluciones industriales
-          </motion.p>
-          <motion.h2 variants={item} className="max-w-[480px] text-[40px] font-[800] leading-[1.1] tracking-[-0.045em] text-[#0F172A] sm:text-[52px]">
+          </p>
+          <h2 className="max-w-[400px] text-[38px] font-[800] leading-[1.1] tracking-[-0.04em] text-[#0F172A] sm:text-[50px]">
             {content.title}
-          </motion.h2>
+          </h2>
         </motion.div>
 
-        {/* Grid imagen + cards */}
+        {/* Grid */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[440px_1fr] lg:gap-14">
-
-          {/* Imagen izquierda */}
           <motion.div
-            initial={{ opacity: 0, x: -28, scale: 0.98 }}
-            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={VP}
-            transition={{ duration: 0.8, ease: EASE }}
-            className="group relative h-[300px] overflow-hidden rounded-2xl bg-slate-100 shadow-[0_4px_24px_rgba(15,23,42,0.08)] lg:h-[320px]"
+            transition={{ duration: 0.7, ease: EASE }}
+            className="group relative h-[300px] overflow-hidden rounded-2xl bg-slate-100 lg:h-[320px]"
           >
-            <Image src={content.image} alt="Servicio de lavandería La Mantela" fill
-              sizes="(max-width:1024px) 100vw, 440px"
-              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F172A]/18 via-transparent to-transparent" />
+            <Image
+              src={content.image}
+              alt="Servicio de lavandería La Mantela"
+              fill sizes="(max-width:1024px) 100vw, 440px"
+              className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F172A]/15 to-transparent" />
           </motion.div>
 
-          {/* Cards de servicios */}
-          <motion.div
-            initial="hidden" whileInView="show" viewport={VP} variants={list}
-            className="flex flex-col justify-center gap-[10px] lg:-mt-[88px]"
-          >
+          <div className="flex flex-col justify-center gap-[10px] lg:-mt-[80px]">
             {first  && <ServiceCard service={first}  featured />}
             {second && <ServiceCard service={second} />}
             {third  && <ServiceCard service={third}  />}
-          </motion.div>
+          </div>
         </div>
 
-        {/* Banner inferior */}
+        {/* Banner */}
         <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={VP}
-          transition={{ duration: 0.75, ease: EASE }}
-          className="group relative mt-10 h-[240px] overflow-hidden rounded-2xl bg-slate-100 shadow-[0_4px_24px_rgba(15,23,42,0.08)] sm:h-[300px] lg:h-[280px]"
+          transition={{ duration: 0.65, ease: EASE }}
+          className="group relative mt-10 h-[240px] overflow-hidden rounded-2xl bg-slate-100 sm:h-[290px] lg:h-[270px]"
         >
-          <Image src={content.bannerImage} alt="Instalaciones industriales La Mantela" fill
-            sizes="(max-width:1024px) 100vw, 1184px"
-            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0F172A]/22 via-transparent to-transparent" />
+          <Image
+            src={content.bannerImage}
+            alt="Instalaciones La Mantela"
+            fill sizes="(max-width:1024px) 100vw, 1184px"
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0F172A]/18 to-transparent" />
         </motion.div>
       </div>
     </section>
