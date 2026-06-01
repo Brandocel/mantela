@@ -2,54 +2,53 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll } from "framer-motion";
 import type { NavItem } from "@/features/home/types/home.types";
 
-type HeaderProps = { navItems: NavItem[] };
+const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
 
-export function Header({ navItems }: HeaderProps) {
+export function Header({ navItems }: { navItems: NavItem[] }) {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen]         = useState(false);
+  const { scrollYProgress }     = useScroll();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full bg-white transition-all duration-300 ${
-          scrolled
-            ? "shadow-[0_4px_28px_rgba(0,0,0,0.09)]"
-            : "border-b border-[#f0f0f0]"
+        className={`sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm transition-all duration-200 ${
+          scrolled ? "shadow-[0_1px_0_0_#E2E8F0,0_4px_20px_rgba(15,23,42,0.06)]" : "border-b border-[#E2E8F0]"
         }`}
       >
-        <div className="mx-auto flex h-[66px] w-full max-w-[1280px] items-center justify-between px-6 sm:px-10 lg:px-[64px]">
+        {/* Barra de progreso scroll — Emil: sólo transform+opacity */}
+        <motion.div
+          className="absolute bottom-0 left-0 h-[2px] origin-left bg-[#16A34A]"
+          style={{ scaleX: scrollYProgress }}
+        />
+
+        <div className="mx-auto flex h-[64px] w-full max-w-[1280px] items-center justify-between px-5 sm:px-8 lg:px-16">
+
           {/* Logo */}
-          <a href="#inicio" aria-label="Inicio" className="relative h-[40px] w-[76px] shrink-0">
-            <Image
-              src="/images/logomantela.png"
-              alt="La Mantela"
-              fill
-              priority
-              sizes="76px"
-              className="object-contain"
-            />
+          <a href="#inicio" aria-label="La Mantela – inicio"
+            className="relative h-[36px] w-[68px] shrink-0 transition-opacity duration-150 hover:opacity-80 active:opacity-60">
+            <Image src="/images/logomantela.png" alt="La Mantela" fill priority sizes="68px" className="object-contain" />
           </a>
 
           {/* Nav desktop */}
-          <nav className="hidden md:flex">
-            <ul className="flex items-center gap-[36px]">
+          <nav className="hidden lg:flex" aria-label="Navegación principal">
+            <ul className="flex items-center gap-8">
               {navItems.map((item) => (
                 <li key={item.href}>
-                  <a
-                    href={item.href}
-                    className="group relative text-[13px] font-[600] text-[#444] transition-colors duration-200 hover:text-[#1a1a1a]"
-                  >
+                  <a href={item.href}
+                    className="group relative py-1 text-[13px] font-[600] tracking-[0.01em] text-[#475569] transition-colors duration-150 hover:text-[#0F172A]">
                     {item.label}
-                    <span className="absolute -bottom-[3px] left-0 h-[2px] w-0 rounded-full bg-[#75CF45] transition-all duration-300 group-hover:w-full" />
+                    {/* Underline animada — Emil: transform, no width */}
+                    <span className="absolute -bottom-[1px] left-0 h-[1.5px] w-full origin-left scale-x-0 rounded-full bg-[#16A34A] transition-transform duration-200 ease-out group-hover:scale-x-100" />
                   </a>
                 </li>
               ))}
@@ -57,74 +56,56 @@ export function Header({ navItems }: HeaderProps) {
           </nav>
 
           {/* CTA desktop */}
-          <div className="hidden items-center gap-4 md:flex">
-            <a
-              href="#contacto"
-              className="group relative inline-flex h-[38px] items-center justify-center overflow-hidden rounded-none rounded-tl-[14px] rounded-br-[14px] bg-[#75CF45] px-5 text-[13px] font-[700] text-white shadow-[0_6px_18px_rgba(117,207,69,0.30)] transition-all duration-300 hover:-translate-y-[2px] hover:shadow-[0_10px_26px_rgba(117,207,69,0.45)]"
-            >
-              <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-600 group-hover:translate-x-full" />
-              <span className="relative">Cotización</span>
+          <div className="hidden lg:flex">
+            <a href="#contacto"
+              className="inline-flex h-[38px] items-center rounded-none rounded-tl-[12px] rounded-br-[12px] bg-[#0F172A] px-5 text-[12px] font-[700] tracking-[0.04em] text-white transition-all duration-150 ease-out hover:bg-[#16A34A] active:scale-[0.97]">
+              Cotización gratuita
             </a>
           </div>
 
-          {/* Hamburger mobile */}
-          <button
-            type="button"
-            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-            onClick={() => setMenuOpen((v) => !v)}
-            className="flex h-[40px] w-[40px] flex-col items-center justify-center gap-[5px] md:hidden"
-          >
-            <span
-              className={`block h-[2px] w-[22px] rounded-full bg-[#1a1a1a] transition-all duration-300 ${
-                menuOpen ? "translate-y-[7px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`block h-[2px] w-[22px] rounded-full bg-[#1a1a1a] transition-all duration-300 ${
-                menuOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`block h-[2px] w-[22px] rounded-full bg-[#1a1a1a] transition-all duration-300 ${
-                menuOpen ? "-translate-y-[7px] -rotate-45" : ""
-              }`}
-            />
+          {/* Hamburger mobile — Emil: transform only */}
+          <button type="button" aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={open}
+            onClick={() => setOpen(v => !v)}
+            className="flex h-[44px] w-[44px] flex-col items-center justify-center gap-[5px] lg:hidden">
+            <span className={`block h-[1.5px] w-[20px] rounded-full bg-[#0F172A] transition-transform duration-200 ease-out origin-center ${open ? "translate-y-[6.5px] rotate-45" : ""}`} />
+            <span className={`block h-[1.5px] w-[14px] rounded-full bg-[#0F172A] transition-all duration-200 ${open ? "opacity-0 scale-x-0" : ""}`} />
+            <span className={`block h-[1.5px] w-[20px] rounded-full bg-[#0F172A] transition-transform duration-200 ease-out origin-center ${open ? "-translate-y-[6.5px] -rotate-45" : ""}`} />
           </button>
         </div>
       </header>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer — Emil: ease-out en entrada, más rápido en salida */}
       <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            key="mobile-menu"
-            initial={{ opacity: 0, y: -12 }}
+        {open && (
+          <motion.nav
+            key="mobile-nav"
+            aria-label="Menú móvil"
+            initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="fixed inset-x-0 top-[66px] z-40 border-b border-[#f0f0f0] bg-white px-6 pb-6 pt-4 shadow-[0_16px_40px_rgba(0,0,0,0.10)] md:hidden"
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] as [number,number,number,number] }}
+            className="fixed inset-x-0 top-[64px] z-40 border-b border-[#E2E8F0] bg-white/98 px-5 pb-5 pt-2 shadow-[0_16px_40px_rgba(15,23,42,0.08)] backdrop-blur-sm lg:hidden"
           >
-            <ul className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="block rounded-xl px-4 py-3 text-[15px] font-[600] text-[#1a1a1a] transition-colors duration-150 hover:bg-[#f5f5f5]"
-                  >
+            <ul>
+              {navItems.map((item, i) => (
+                <motion.li key={item.href}
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.045, duration: 0.2, ease: [0.23, 1, 0.32, 1] as [number,number,number,number] }}
+                >
+                  <a href={item.href} onClick={() => setOpen(false)}
+                    className="flex border-b border-[#F1F5F9] py-[14px] text-[15px] font-[600] text-[#0F172A] transition-colors duration-150 hover:text-[#16A34A] last:border-none active:opacity-70">
                     {item.label}
                   </a>
-                </li>
+                </motion.li>
               ))}
             </ul>
-            <a
-              href="#contacto"
-              onClick={() => setMenuOpen(false)}
-              className="mt-4 flex h-[48px] w-full items-center justify-center rounded-none rounded-tl-[18px] rounded-br-[18px] bg-[#75CF45] text-[15px] font-[700] text-white shadow-[0_8px_20px_rgba(117,207,69,0.30)]"
-            >
+            <a href="#contacto" onClick={() => setOpen(false)}
+              className="mt-4 flex h-[50px] w-full items-center justify-center rounded-none rounded-tl-[18px] rounded-br-[18px] bg-[#16A34A] text-[14px] font-[700] text-white transition-all duration-150 active:scale-[0.98]">
               Solicitar cotización
             </a>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </>

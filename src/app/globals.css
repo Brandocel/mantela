@@ -1,33 +1,40 @@
 @import "tailwindcss";
 
+/* ── Design tokens ─────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
+  --ink:        #0F172A;   /* slate-900 — titulos, headings */
+  --ink-2:      #475569;   /* slate-600 — body text        */
+  --ink-3:      #94A3B8;   /* slate-400 — muted/captions   */
+  --bg:         #FFFFFF;
+  --bg-alt:     #F8FAFC;   /* slate-50  — sections alternas */
+  --border:     #E2E8F0;   /* slate-200                    */
+  --accent:     #16A34A;   /* green-700 — CTA principal    */
+  --accent-h:   #15803D;   /* green-800 — CTA hover        */
+
+  /* Easings (Emil Kowalski) */
+  --ease-out:   cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-inout: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-draw:  cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html  { scroll-behavior: smooth; }
+body  { background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-}
-
-/* Ping animation para live badge */
+/* Live badge ping */
 @keyframes ping {
-  75%, 100% {
-    transform: scale(2);
-    opacity: 0;
+  75%, 100% { transform: scale(2.2); opacity: 0; }
+}
+.animate-ping { animation: ping 1.6s cubic-bezier(0,0,.2,1) infinite; }
+
+/* Hover sólo en dispositivos con puntero fino (Emil: gate hover) */
+@media (hover: none) {
+  .hover-only { display: none; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
-}
-
-.animate-ping {
-  animation: ping 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-/* Shimmer para botones */
-@keyframes shimmer {
-  from { transform: translateX(-100%); }
-  to   { transform: translateX(100%); }
 }

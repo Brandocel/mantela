@@ -4,58 +4,51 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ServiceItem, ServicesContent } from "@/features/home/types/home.types";
 
-const cb = [0.22, 1, 0.36, 1] as [number, number, number, number];
+const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
+const VP   = { once: true, margin: "-80px" } as const;
 
-const vp = { once: true, margin: "-80px" } as const;
-
-const stagger = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.11 } },
-};
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.7, ease: cb } },
+/* Emil: stagger 50ms, desde scale(0.96) no scale(0) */
+const list = { hidden: {}, show: { transition: { staggerChildren: 0.05 } } };
+const item = {
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  show:   { opacity: 1, y: 0,  scale: 1, transition: { duration: 0.65, ease: EASE } },
 };
 
 function ServiceCard({ service, featured = false }: { service: ServiceItem; featured?: boolean }) {
   return (
     <motion.article
-      variants={fadeUp}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className={`group relative flex gap-5 overflow-hidden rounded-2xl transition-shadow duration-300 ${
+      variants={item}
+      /* Emil: hover sólo transform+opacity, active:scale */
+      whileHover={{ y: -3 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.18, ease: "easeOut" }}
+      className={`group relative flex gap-5 rounded-2xl outline-none transition-shadow duration-200 ${
         featured
-          ? "bg-white p-7 shadow-[0_6px_28px_rgba(0,0,0,0.07)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.11)]"
-          : "p-5 hover:bg-[#fafafa]"
+          ? "bg-white p-6 shadow-[0_2px_12px_rgba(15,23,42,0.06),0_0_0_1px_#E2E8F0] hover:shadow-[0_12px_40px_rgba(15,23,42,0.10),0_0_0_1px_#CBD5E1]"
+          : "p-5 hover:bg-[#F8FAFC]"
       }`}
     >
-      {/* Barra de acento izquierda en featured */}
+      {/* Barra acento izquierda en featured */}
       {featured && (
-        <span className="absolute left-0 top-7 bottom-7 w-[3px] rounded-r-full bg-[#75CF45]" />
+        <span className="absolute left-0 top-5 bottom-5 w-[3px] rounded-r-full bg-[#16A34A]" />
       )}
 
-      {/* Ícono con fondo */}
+      {/* Ícono con bg — Emil: scale con transform, rotate sutil */}
       <motion.div
-        whileHover={{ scale: 1.12, rotate: 4 }}
-        transition={{ duration: 0.25 }}
-        className={`relative mt-[2px] h-[44px] w-[44px] shrink-0 overflow-hidden rounded-xl ${
-          featured ? "bg-[#75CF45]/10" : "bg-[#f5f5f5]"
+        whileHover={{ scale: 1.08, rotate: 3 }}
+        transition={{ duration: 0.18, ease: "easeOut" }}
+        className={`relative mt-[2px] h-[42px] w-[42px] shrink-0 overflow-hidden rounded-xl ${
+          featured ? "bg-[#DCFCE7]" : "bg-[#F1F5F9]"
         }`}
       >
-        <Image
-          src={service.icon}
-          alt={service.iconAlt}
-          fill
-          sizes="44px"
-          className="object-contain p-2"
-        />
+        <Image src={service.icon} alt={service.iconAlt} fill sizes="42px" className="object-contain p-2" />
       </motion.div>
 
       <div>
-        <h3 className="text-[17px] font-[700] leading-[23px] tracking-[-0.02em] text-[#1a1a1a]">
+        <h3 className="text-[15px] font-[700] leading-[21px] tracking-[-0.02em] text-[#0F172A]">
           {service.title}
         </h3>
-        <p className="mt-[7px] max-w-[340px] text-[13px] leading-[21px] text-[#666]">
+        <p className="mt-[6px] max-w-[320px] text-[13px] leading-[21px] text-[#64748B]">
           {service.description}
         </p>
       </div>
@@ -68,48 +61,43 @@ export function ServicesSection({ content }: { content: ServicesContent }) {
 
   return (
     <section id="servicios" className="relative bg-white">
-      <div className="mx-auto w-full max-w-[1280px] px-6 pb-[96px] pt-[96px] sm:px-10 lg:px-[64px]">
+      <div className="mx-auto w-full max-w-[1280px] px-5 pb-24 pt-24 sm:px-8 lg:px-16">
 
-        {/* Header de sección */}
+        {/* Header */}
         <motion.div
-          initial="hidden" whileInView="show" viewport={vp} variants={stagger}
-          className="mb-[56px]"
+          initial="hidden" whileInView="show" viewport={VP} variants={list}
+          className="mb-14"
         >
-          <motion.p variants={fadeUp} className="mb-3 flex items-center gap-[10px] text-[11px] font-[800] uppercase tracking-[0.18em] text-[#75CF45]">
-            <span className="h-[2px] w-[22px] rounded-full bg-[#75CF45]" />
-            Lo que ofrecemos
+          <motion.p variants={item} className="mb-3 flex items-center gap-[10px] text-[10px] font-[800] uppercase tracking-[0.22em] text-[#16A34A]">
+            <span className="h-px w-[20px] bg-[#16A34A]" />
+            Soluciones industriales
           </motion.p>
-          <motion.h2 variants={fadeUp} className="text-[46px] font-[800] leading-[1.1] tracking-[-0.04em] text-[#1a1a1a] sm:text-[58px]">
+          <motion.h2 variants={item} className="max-w-[480px] text-[40px] font-[800] leading-[1.1] tracking-[-0.045em] text-[#0F172A] sm:text-[52px]">
             {content.title}
           </motion.h2>
         </motion.div>
 
-        {/* Grid principal */}
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[448px_1fr] lg:gap-[52px]">
+        {/* Grid imagen + cards */}
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[440px_1fr] lg:gap-14">
 
           {/* Imagen izquierda */}
           <motion.div
-            initial={{ opacity: 0, x: -36 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={vp}
-            transition={{ duration: 0.85, ease: cb }}
-            className="relative h-[320px] overflow-hidden rounded-2xl bg-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.10)] lg:h-[330px]"
+            initial={{ opacity: 0, x: -28, scale: 0.98 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+            viewport={VP}
+            transition={{ duration: 0.8, ease: EASE }}
+            className="group relative h-[300px] overflow-hidden rounded-2xl bg-slate-100 shadow-[0_4px_24px_rgba(15,23,42,0.08)] lg:h-[320px]"
           >
-            <Image
-              src={content.image}
-              alt="Servicio profesional de lavandería"
-              fill
-              sizes="(max-width:1024px) 100vw, 448px"
-              className="object-cover object-center transition-transform duration-700 hover:scale-[1.04]"
-            />
-            {/* Overlay sutil */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+            <Image src={content.image} alt="Servicio de lavandería La Mantela" fill
+              sizes="(max-width:1024px) 100vw, 440px"
+              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F172A]/18 via-transparent to-transparent" />
           </motion.div>
 
           {/* Cards de servicios */}
           <motion.div
-            initial="hidden" whileInView="show" viewport={vp} variants={stagger}
-            className="flex flex-col justify-center gap-3 lg:-mt-[100px]"
+            initial="hidden" whileInView="show" viewport={VP} variants={list}
+            className="flex flex-col justify-center gap-[10px] lg:-mt-[88px]"
           >
             {first  && <ServiceCard service={first}  featured />}
             {second && <ServiceCard service={second} />}
@@ -119,20 +107,16 @@ export function ServicesSection({ content }: { content: ServicesContent }) {
 
         {/* Banner inferior */}
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={vp}
-          transition={{ duration: 0.8, ease: cb }}
-          className="group relative mt-[44px] h-[260px] overflow-hidden rounded-2xl bg-slate-100 shadow-[0_20px_60px_rgba(0,0,0,0.10)] sm:h-[340px] lg:h-[310px]"
+          initial={{ opacity: 0, y: 20, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={VP}
+          transition={{ duration: 0.75, ease: EASE }}
+          className="group relative mt-10 h-[240px] overflow-hidden rounded-2xl bg-slate-100 shadow-[0_4px_24px_rgba(15,23,42,0.08)] sm:h-[300px] lg:h-[280px]"
         >
-          <Image
-            src={content.bannerImage}
-            alt="Área industrial de lavandería La Mantela"
-            fill
+          <Image src={content.bannerImage} alt="Instalaciones industriales La Mantela" fill
             sizes="(max-width:1024px) 100vw, 1184px"
-            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/25 via-transparent to-transparent" />
+            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0F172A]/22 via-transparent to-transparent" />
         </motion.div>
       </div>
     </section>
