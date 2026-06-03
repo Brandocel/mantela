@@ -6,6 +6,17 @@ import type { Certification, CertificationsContent } from "@/features/home/types
 const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
 const VP   = { once: true, margin: "-60px" } as const;
 
+const SPRING = { type: "spring", stiffness: 340, damping: 30 } as const;
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07 } },
+};
+const badgeVariants = {
+  hidden:  { opacity: 0, y: 18, scale: 0.96 },
+  visible: { opacity: 1, y: 0,  scale: 1, transition: { duration: 0.5, ease: EASE } },
+};
+
 function CertIcon({ icon }: { icon: Certification["icon"] }) {
   const cls = "h-[22px] w-[22px]";
   if (icon === "iso")
@@ -19,19 +30,22 @@ function CertIcon({ icon }: { icon: Certification["icon"] }) {
   return <svg viewBox="0 0 32 32" fill="none" className={cls} aria-hidden><circle cx="16" cy="16" r="11" stroke="currentColor" strokeWidth="1.8"/><path d="M11 16.5l3.5 3.5 7-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>;
 }
 
-function CertBadge({ cert, delay }: { cert: Certification; delay: number }) {
+function CertBadge({ cert }: { cert: Certification }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={VP}
-      transition={{ duration: 0.6, ease: EASE, delay }}
-      className="group flex flex-col items-center gap-4 rounded-2xl border border-[#E2E8F0] bg-white p-7 text-center transition-all duration-200 hover:border-[#BBF7D0] hover:shadow-[0_8px_28px_rgba(22,163,74,0.07)]"
+      variants={badgeVariants}
+      /* Emil: spring lift + border highlight en hover */
+      whileHover={{ y: -6, scale: 1.03 }}
+      transition={SPRING}
+      className="group flex flex-col items-center gap-4 rounded-2xl border border-[#E2E8F0] bg-white p-7 text-center cursor-default"
     >
-      {/* Ícono — sin badge, sin pill */}
-      <div className="flex h-[56px] w-[56px] items-center justify-center rounded-full border border-[#E2E8F0] text-[#475569] transition-all duration-200 group-hover:border-[#86EFAC] group-hover:bg-[#F0FDF4] group-hover:text-[#16A34A]">
+      <motion.div
+        className="flex h-[56px] w-[56px] items-center justify-center rounded-full border border-[#E2E8F0] text-[#475569]"
+        whileHover={{ borderColor: "#86EFAC", backgroundColor: "#F0FDF4", color: "#16A34A", scale: 1.1 }}
+        transition={SPRING}
+      >
         <CertIcon icon={cert.icon} />
-      </div>
+      </motion.div>
 
       <div>
         <p className="text-[13px] font-[800] leading-none tracking-[-0.01em] text-[#0F172A]">
@@ -70,20 +84,27 @@ export function CertificationsSection({ content }: { content: CertificationsCont
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-          {content.items.map((cert, i) => (
-            <CertBadge key={cert.name} cert={cert} delay={i * 0.06} />
+        {/* Emil: stagger en la grilla de badges */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={VP}
+          className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5"
+        >
+          {content.items.map((cert) => (
+            <CertBadge key={cert.name} cert={cert} />
           ))}
-        </div>
+        </motion.div>
 
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={VP}
           transition={{ delay: 0.5 }}
-          className="mt-6 text-center text-[11px] text-[#CBD5E1]"
+          className="mt-8 text-center text-[11px] font-[500] tracking-[0.06em] text-[#CBD5E1]"
         >
-          Logos y certificaciones reales próximamente
+          Procesos auditados · Servicio confiable · Industria B2B
         </motion.p>
       </div>
     </section>

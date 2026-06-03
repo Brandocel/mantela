@@ -5,8 +5,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { AboutContent } from "@/features/home/types/home.types";
 
-const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
-const VP   = { once: true, margin: "-80px" } as const;
+const EASE   = [0.23, 1, 0.32, 1] as [number, number, number, number];
+const VP     = { once: true, margin: "-80px" } as const;
+const SPRING = { type: "spring", stiffness: 320, damping: 28 } as const;
 
 export function AboutSection({ content }: { content: AboutContent }) {
   const [active, setActive] = useState(0);
@@ -78,7 +79,7 @@ export function AboutSection({ content }: { content: AboutContent }) {
                   <motion.span
                     layoutId="tab-indicator"
                     className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-[#16A34A]"
-                    transition={{ duration: 0.22, ease: EASE }}
+                    transition={SPRING}
                   />
                 )}
               </button>
@@ -101,9 +102,9 @@ export function AboutSection({ content }: { content: AboutContent }) {
                 {tab.points.map((point, i) => (
                   <motion.li
                     key={point}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.25, delay: i * 0.05 }}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ ...SPRING, delay: i * 0.06 }}
                     className="flex items-center gap-3"
                   >
                     <span className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full bg-[#F0FDF4]">

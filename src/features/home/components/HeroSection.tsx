@@ -5,7 +5,8 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import type { HeroContent } from "@/features/home/types/home.types";
 
-const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
+const EASE   = [0.23, 1, 0.32, 1] as [number, number, number, number];
+const SPRING = { type: "spring", stiffness: 360, damping: 32 } as const;
 
 const stats = [
   { value: "500+", label: "Empresas atendidas"      },
@@ -126,13 +127,16 @@ export function HeroSection({ content }: { content: HeroContent }) {
               transition={{ duration: 0.6, delay: 0.55 }}
               className="mt-7 flex flex-wrap items-center gap-4"
             >
-              <a
+              <motion.a
                 href={content.buttonHref}
                 target="_blank" rel="noreferrer"
-                className="inline-flex h-[50px] items-center gap-2.5 rounded-none rounded-tl-[18px] rounded-br-[18px] bg-[#16A34A] px-7 text-[13px] font-[700] tracking-[0.02em] text-white shadow-[0_6px_20px_rgba(22,163,74,0.22)] transition-all duration-200 hover:bg-[#15803D] hover:shadow-[0_10px_28px_rgba(22,163,74,0.32)] active:scale-[0.97]"
+                whileHover={{ scale: 1.04, boxShadow: "0 10px 28px rgba(22,163,74,0.34)" }}
+                whileTap={{ scale: 0.96 }}
+                transition={SPRING}
+                className="inline-flex h-[50px] items-center gap-2.5 rounded-none rounded-tl-[18px] rounded-br-[18px] bg-[#16A34A] px-7 text-[13px] font-[700] tracking-[0.02em] text-white shadow-[0_6px_20px_rgba(22,163,74,0.22)]"
               >
                 {content.buttonLabel}
-              </a>
+              </motion.a>
               <a
                 href="#servicios"
                 className="text-[13px] font-[600] text-[#94A3B8] underline-offset-4 transition-colors duration-150 hover:text-[#0F172A] hover:underline"
@@ -141,24 +145,29 @@ export function HeroSection({ content }: { content: HeroContent }) {
               </a>
             </motion.div>
 
-            {/* Stats — estáticos, sin contador animado */}
+            {/* Stats — stagger spring al entrar */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
+              transition={{ duration: 0.5, delay: 0.65 }}
               className="mt-10"
             >
               <div className="mb-6 h-px bg-[#E2E8F0]" />
               <div className="grid grid-cols-3 gap-4">
-                {stats.map((s) => (
-                  <div key={s.label}>
+                {stats.map((s, i) => (
+                  <motion.div
+                    key={s.label}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ ...SPRING, delay: 0.75 + i * 0.08 }}
+                  >
                     <p className="text-[26px] font-[800] leading-none tracking-[-0.04em] text-[#0F172A]">
                       {s.value}
                     </p>
                     <p className="mt-[5px] text-[11px] font-[500] leading-[14px] text-[#94A3B8]">
                       {s.label}
                     </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>

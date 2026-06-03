@@ -31,6 +31,8 @@ export type NavItem = {
     number: string;
     title: string;
     description: string;
+    image: string;
+    imageAlt: string;
   };
   
   export type ProcessContent = {

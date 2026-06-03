@@ -6,47 +6,94 @@ import type { ExperienceContent } from "@/features/home/types/home.types";
 const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
 const VP   = { once: true, margin: "-60px" } as const;
 
-function CategoryIcon({ category }: { category: string }) {
-  const cls = "h-[13px] w-[13px]";
-  if (category === "Hotelería")
-    return <svg viewBox="0 0 16 16" fill="none" className={cls} aria-hidden><path d="M2 14V6l6-4 6 4v8" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><rect x="6" y="9" width="4" height="5" rx="0.5" stroke="currentColor" strokeWidth="1.5"/></svg>;
-  if (category === "Gastronomía" || category === "Restaurantes")
-    return <svg viewBox="0 0 16 16" fill="none" className={cls} aria-hidden><path d="M5 2v4a3 3 0 0 0 6 0V2M8 6v8M11 2v12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>;
-  if (category === "Salud")
-    return <svg viewBox="0 0 16 16" fill="none" className={cls} aria-hidden><path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/><rect x="2" y="2" width="12" height="12" rx="3" stroke="currentColor" strokeWidth="1.5"/></svg>;
-  if (category === "Bienestar")
-    return <svg viewBox="0 0 16 16" fill="none" className={cls} aria-hidden><path d="M8 13.5C8 13.5 2 10 2 5.5a3.5 3.5 0 0 1 6-2.45A3.5 3.5 0 0 1 14 5.5C14 10 8 13.5 8 13.5Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/></svg>;
-  return <svg viewBox="0 0 16 16" fill="none" className={cls} aria-hidden><rect x="2" y="6" width="12" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5"/><path d="M5 6V4a3 3 0 0 1 6 0v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>;
+const CIRCLE_VARIANTS = [
+  { bg: "bg-[#F0FDF4]", text: "text-[#166534]", border: "border-[#BBF7D0]" },
+  { bg: "bg-[#F1F5F9]", text: "text-[#334155]", border: "border-[#CBD5E1]" },
+  { bg: "bg-[#ECFDF5]", text: "text-[#065F46]", border: "border-[#6EE7B7]" },
+  { bg: "bg-[#F8FAFC]", text: "text-[#475569]", border: "border-[#E2E8F0]" },
+];
+
+function LogoCircle({
+  name,
+  colorIndex,
+}: {
+  name: string;
+  category: string;
+  colorIndex: number;
+}) {
+  const words = name.split(" ").filter((w) => w.length > 1);
+  const initials = words.length >= 2
+    ? (words[0][0] + words[1][0]).toUpperCase()
+    : name.slice(0, 2).toUpperCase();
+
+  const v = CIRCLE_VARIANTS[colorIndex % CIRCLE_VARIANTS.length];
+
+  return (
+    <div className="flex shrink-0 flex-col items-center gap-[10px]">
+      <div
+        className={`flex h-[88px] w-[88px] items-center justify-center rounded-full border text-[17px] font-[800] tracking-[0.01em] select-none transition-transform duration-200 hover:scale-[1.06] ${v.bg} ${v.text} ${v.border}`}
+        title={name}
+        aria-label={name}
+      >
+        {initials}
+      </div>
+      <p className="w-[100px] text-center text-[10px] font-[600] leading-[14px] text-[#334155]">
+        {name}
+      </p>
+    </div>
+  );
 }
 
-function LogoCard({ name, category }: { name: string; category: string }) {
+function MarqueeRow({
+  logos,
+  reverse = false,
+}: {
+  logos: ExperienceContent["logos"];
+  reverse?: boolean;
+}) {
+  /* Duplicar para que el loop sea continuo sin corte visible */
+  const doubled = [...logos, ...logos];
+
   return (
-    <div className="flex shrink-0 items-center gap-3 rounded-xl border border-[#E2E8F0] bg-white px-5 py-3 transition-colors duration-150 hover:border-[#CBD5E1]">
-      <span className="flex h-[28px] w-[28px] shrink-0 items-center justify-center rounded-lg bg-[#F8FAFC] text-[#64748B]">
-        <CategoryIcon category={category} />
-      </span>
-      <div>
-        <p className="text-[12px] font-[700] leading-none text-[#0F172A]">{name}</p>
-        <p className="mt-[3px] text-[10px] font-[500] text-[#94A3B8]">{category}</p>
+    <div className="relative overflow-hidden">
+      {/* Fade masks — ocultan el punto de loop */}
+      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[100px] bg-gradient-to-r from-[#F8FAFC] to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[100px] bg-gradient-to-l from-[#F8FAFC] to-transparent" />
+
+      {/*
+        width: max-content es CRÍTICO — hace que translateX(-50%) se calcule
+        sobre el ancho real del contenido duplicado, no del viewport.
+        Sin esto, el -50% no coincide y se ve el corte.
+      */}
+      <div
+        className={`flex items-start gap-8 ${reverse ? "marquee-track-reverse" : "marquee-track"}`}
+        style={{ width: "max-content" }}
+      >
+        {doubled.map((logo, i) => (
+          <LogoCircle
+            key={`${logo.name}-${i}`}
+            name={logo.name}
+            category={logo.category}
+            colorIndex={i % 4}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
 export function ExperienceSection({ content }: { content: ExperienceContent }) {
-  const doubled = [...content.logos, ...content.logos];
-
   return (
     <section className="overflow-hidden bg-[#F8FAFC]">
-      <div className="mx-auto w-full max-w-[1280px] px-5 pb-20 pt-20 sm:px-8 lg:px-16">
+      <div className="mx-auto w-full max-w-[1280px] px-5 pb-16 pt-20 sm:px-8 lg:px-16">
 
-        {/* Header — sin watermark de número gigante */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={VP}
           transition={{ duration: 0.6, ease: EASE }}
-          className="mb-12 flex flex-col items-center text-center"
+          className="mb-10 flex flex-col items-center text-center"
         >
           <p className="mb-3 flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#16A34A]">
             <span className="h-px w-[20px] bg-[#16A34A]" />
@@ -61,44 +108,42 @@ export function ExperienceSection({ content }: { content: ExperienceContent }) {
           </p>
         </motion.div>
 
-        {/* Stats — horizontales, sin card boxes */}
+        {/* Stats en línea — sobrio, sin cards */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={VP}
           transition={{ duration: 0.6, ease: EASE, delay: 0.1 }}
-          className="mb-12 flex flex-wrap justify-center gap-8 border-y border-[#E2E8F0] py-8 sm:gap-16"
+          className="mb-12 flex flex-wrap justify-center gap-8 border-y border-[#E2E8F0] py-7 sm:gap-16"
         >
           {[
             { value: "500+", label: "Empresas atendidas"  },
             { value: "12",   label: "Industrias servidas" },
             { value: "100%", label: "Servicio puntual"    },
-          ].map(({ value, label }, i) => (
+          ].map(({ value, label }) => (
             <div key={label} className="text-center">
-              <p className="text-[28px] font-[800] leading-none tracking-[-0.04em] text-[#0F172A]">{value}</p>
-              <p className="mt-2 text-[11px] font-[500] text-[#94A3B8]">{label}</p>
+              <p className="text-[26px] font-[800] leading-none tracking-[-0.04em] text-[#0F172A]">
+                {value}
+              </p>
+              <p className="mt-[6px] text-[11px] font-[500] text-[#94A3B8]">{label}</p>
             </div>
           ))}
         </motion.div>
       </div>
 
-      {/* Marquee — fuera del container, full-width */}
+      {/* Dos filas de marquee — fuera del container para ser full-width */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={VP}
-        transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
-        className="relative"
+        transition={{ duration: 0.7, ease: EASE, delay: 0.15 }}
+        className="flex flex-col gap-6 pb-16"
       >
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[72px] bg-gradient-to-r from-[#F8FAFC] to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[72px] bg-gradient-to-l from-[#F8FAFC] to-transparent" />
-        <div className="flex pb-10 pl-4">
-          <div className="marquee-track flex gap-3">
-            {doubled.map((logo, i) => (
-              <LogoCard key={`${logo.name}-${i}`} name={logo.name} category={logo.category} />
-            ))}
-          </div>
-        </div>
+        {/* Fila 1 — avanza hacia la izquierda */}
+        <MarqueeRow logos={content.logos} reverse={false} />
+
+        {/* Fila 2 — avanza hacia la derecha */}
+        <MarqueeRow logos={content.logos} reverse={true} />
       </motion.div>
     </section>
   );

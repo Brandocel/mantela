@@ -21,16 +21,25 @@ html  { scroll-behavior: smooth; }
 body  { background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
 
 /* Marquee logos — Emil: CSS animation para predetermined motion */
-@keyframes marquee {
+@keyframes marquee-left {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
 .marquee-track {
-  animation: marquee 28s linear infinite;
+  animation: marquee-left 30s linear infinite;
+  will-change: transform;
+}
+.marquee-track-reverse {
+  animation: marquee-right 38s linear infinite;
   will-change: transform;
 }
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation-play-state: paused; }
+  .marquee-track,
+  .marquee-track-reverse { animation-play-state: paused; }
 }
 
 /* Live badge ping */
