@@ -41,7 +41,7 @@ function CertBadge({ cert }: { cert: Certification }) {
     >
       <motion.div
         className="flex h-[56px] w-[56px] items-center justify-center rounded-full border border-[#E2E8F0] text-[#475569]"
-        whileHover={{ borderColor: "#86EFAC", backgroundColor: "#F0FDF4", color: "#16A34A", scale: 1.1 }}
+        whileHover={{ borderColor: "#86EFAC", backgroundColor: "#F0FDFC", color: "#00B2A9", scale: 1.1 }}
         transition={SPRING}
       >
         <CertIcon icon={cert.icon} />
@@ -71,10 +71,10 @@ export function CertificationsSection({ content }: { content: CertificationsCont
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-12 text-center"
         >
-          <p className="mb-3 inline-flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#16A34A]">
-            <span className="h-px w-[20px] bg-[#16A34A]" />
+          <p className="mb-3 inline-flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#00B2A9]">
+            <span className="h-px w-[20px] bg-[#00B2A9]" />
             Estándares de calidad
-            <span className="h-px w-[20px] bg-[#16A34A]" />
+            <span className="h-px w-[20px] bg-[#00B2A9]" />
           </p>
           <h2 className="mx-auto max-w-[380px] text-[32px] font-[800] leading-[1.15] tracking-[-0.04em] text-[#0F172A] sm:text-[42px]">
             {content.title}

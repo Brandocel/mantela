@@ -102,7 +102,7 @@ export function Footer({ navItems }: { navItems: NavItem[] }) {
                   className="group relative text-[12px] font-[600] tracking-[0.03em] text-white/40 transition-colors duration-150 hover:text-white active:opacity-50">
                   {item.label}
                   {/* Emil: underline con scaleX */}
-                  <span className="absolute -bottom-[2px] left-0 h-px w-full origin-left scale-x-0 bg-[#16A34A] transition-transform duration-200 ease-out group-hover:scale-x-100" />
+                  <span className="absolute -bottom-[2px] left-0 h-px w-full origin-left scale-x-0 bg-[#00B2A9] transition-transform duration-200 ease-out group-hover:scale-x-100" />
                 </a>
               </li>
             ))}
@@ -123,7 +123,7 @@ export function Footer({ navItems }: { navItems: NavItem[] }) {
               whileHover={{ y: -2, scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.15, ease: "easeOut" }}
-              className="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-white/[0.08] text-white/35 transition-colors duration-150 hover:border-[#16A34A]/40 hover:bg-[#16A34A]/10 hover:text-[#4ADE80]"
+              className="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-white/[0.08] text-white/35 transition-colors duration-150 hover:border-[#00B2A9]/40 hover:bg-[#00B2A9]/10 hover:text-[#4ADE80]"
             >
               <Icon />
             </motion.a>

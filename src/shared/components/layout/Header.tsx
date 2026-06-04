@@ -27,7 +27,7 @@ export function Header({ navItems }: { navItems: NavItem[] }) {
       >
         {/* Barra de progreso scroll — Emil: sólo transform+opacity */}
         <motion.div
-          className="absolute bottom-0 left-0 h-[2px] origin-left bg-[#16A34A]"
+          className="absolute bottom-0 left-0 h-[2px] origin-left bg-[#00B2A9]"
           style={{ scaleX: scrollYProgress }}
         />
 
@@ -48,7 +48,7 @@ export function Header({ navItems }: { navItems: NavItem[] }) {
                     className="group relative py-1 text-[13px] font-[600] tracking-[0.01em] text-[#475569] transition-colors duration-150 hover:text-[#0F172A]">
                     {item.label}
                     {/* Underline animada — Emil: transform, no width */}
-                    <span className="absolute -bottom-[1px] left-0 h-[1.5px] w-full origin-left scale-x-0 rounded-full bg-[#16A34A] transition-transform duration-200 ease-out group-hover:scale-x-100" />
+                    <span className="absolute -bottom-[1px] left-0 h-[1.5px] w-full origin-left scale-x-0 rounded-full bg-[#00B2A9] transition-transform duration-200 ease-out group-hover:scale-x-100" />
                   </a>
                 </li>
               ))}
@@ -58,7 +58,7 @@ export function Header({ navItems }: { navItems: NavItem[] }) {
           {/* CTA desktop */}
           <div className="hidden lg:flex">
             <a href="#contacto"
-              className="inline-flex h-[38px] items-center rounded-none rounded-tl-[12px] rounded-br-[12px] bg-[#0F172A] px-5 text-[12px] font-[700] tracking-[0.04em] text-white transition-all duration-150 ease-out hover:bg-[#16A34A] active:scale-[0.97]">
+              className="inline-flex h-[38px] items-center rounded-none rounded-tl-[12px] rounded-br-[12px] bg-[#0F172A] px-5 text-[12px] font-[700] tracking-[0.04em] text-white transition-all duration-150 ease-out hover:bg-[#00B2A9] active:scale-[0.97]">
               Cotización gratuita
             </a>
           </div>
@@ -95,14 +95,14 @@ export function Header({ navItems }: { navItems: NavItem[] }) {
                   transition={{ delay: i * 0.045, duration: 0.2, ease: [0.23, 1, 0.32, 1] as [number,number,number,number] }}
                 >
                   <a href={item.href} onClick={() => setOpen(false)}
-                    className="flex border-b border-[#F1F5F9] py-[14px] text-[15px] font-[600] text-[#0F172A] transition-colors duration-150 hover:text-[#16A34A] last:border-none active:opacity-70">
+                    className="flex border-b border-[#F1F5F9] py-[14px] text-[15px] font-[600] text-[#0F172A] transition-colors duration-150 hover:text-[#00B2A9] last:border-none active:opacity-70">
                     {item.label}
                   </a>
                 </motion.li>
               ))}
             </ul>
             <a href="#contacto" onClick={() => setOpen(false)}
-              className="mt-4 flex h-[50px] w-full items-center justify-center rounded-none rounded-tl-[18px] rounded-br-[18px] bg-[#16A34A] text-[14px] font-[700] text-white transition-all duration-150 active:scale-[0.98]">
+              className="mt-4 flex h-[50px] w-full items-center justify-center rounded-none rounded-tl-[18px] rounded-br-[18px] bg-[#00B2A9] text-[14px] font-[700] text-white transition-all duration-150 active:scale-[0.98]">
               Solicitar cotización
             </a>
           </motion.nav>

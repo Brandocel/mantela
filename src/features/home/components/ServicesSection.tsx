@@ -24,8 +24,8 @@ function ServiceCard({ service, featured = false, floatDelay = 0 }: { service: S
       variants={itemVariants}
       whileHover={
         featured
-          ? { y: -5, boxShadow: "0 16px 40px rgba(15,23,42,0.12), 0 0 0 1px #BBF7D0" }
-          : { y: -3, backgroundColor: "#F0FDF4", boxShadow: "0 4px 20px rgba(22,163,74,0.08)" }
+          ? { y: -5, boxShadow: "0 16px 40px rgba(15,23,42,0.12), 0 0 0 1px #99F6E4" }
+          : { y: -3, backgroundColor: "#F0FDFC", boxShadow: "0 4px 20px rgba(0,178,169,0.08)" }
       }
       transition={SPRING}
       className={`group flex gap-5 rounded-xl ${
@@ -37,9 +37,9 @@ function ServiceCard({ service, featured = false, floatDelay = 0 }: { service: S
       {/* Línea verde con pulso en featured */}
       {featured && (
         <>
-          <span className="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full bg-[#16A34A]" />
+          <span className="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full bg-[#00B2A9]" />
           <motion.span
-            className="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full bg-[#16A34A]"
+            className="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full bg-[#00B2A9]"
             animate={{ opacity: [1, 0.3, 1] }}
             transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
           />
@@ -49,7 +49,7 @@ function ServiceCard({ service, featured = false, floatDelay = 0 }: { service: S
       {/* Ícono con flotación continua */}
       <motion.div
         className={`relative mt-[2px] h-[40px] w-[40px] shrink-0 overflow-hidden rounded-lg ${
-          featured ? "bg-[#F0FDF4]" : "bg-[#F8FAFC]"
+          featured ? "bg-[#F0FDFC]" : "bg-[#F8FAFC]"
         }`}
         animate={{ y: [-2, 2, -2] }}
         transition={{ duration: 2.8, ease: "easeInOut" as const, repeat: Infinity, delay: floatDelay }}
@@ -85,8 +85,8 @@ export function ServicesSection({ content }: { content: ServicesContent }) {
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-14"
         >
-          <p className="mb-3 flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#16A34A]">
-            <span className="h-px w-[20px] bg-[#16A34A]" />
+          <p className="mb-3 flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#00B2A9]">
+            <span className="h-px w-[20px] bg-[#00B2A9]" />
             Soluciones industriales
           </p>
           <h2 className="max-w-[400px] text-[38px] font-[800] leading-[1.1] tracking-[-0.04em] text-[#0F172A] sm:text-[50px]">
@@ -112,7 +112,7 @@ export function ServicesSection({ content }: { content: ServicesContent }) {
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0F172A]/30 via-transparent to-transparent" />
             {/* Badge de confianza — anclado abajo izquierda */}
             <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 backdrop-blur-sm">
-              <span className="h-[6px] w-[6px] rounded-full bg-[#16A34A]" />
+              <span className="h-[6px] w-[6px] rounded-full bg-[#00B2A9]" />
               <span className="text-[10px] font-[700] tracking-[0.04em] text-[#0F172A]">
                 Capacidad industrial · 24/7
               </span>

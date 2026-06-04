@@ -8,9 +8,9 @@ const EASE = [0.23, 1, 0.32, 1] as [number, number, number, number];
 const VP   = { once: true, margin: "-60px" } as const;
 
 const CIRCLE_VARIANTS = [
-  { bg: "bg-[#F0FDF4]", text: "text-[#166534]", border: "border-[#BBF7D0]" },
+  { bg: "bg-[#F0FDFC]", text: "text-[#007A75]", border: "border-[#99F6E4]" },
   { bg: "bg-[#F1F5F9]", text: "text-[#334155]", border: "border-[#CBD5E1]" },
-  { bg: "bg-[#ECFDF5]", text: "text-[#065F46]", border: "border-[#6EE7B7]" },
+  { bg: "bg-[#F0FDFA]", text: "text-[#065F46]", border: "border-[#5EEAD4]" },
   { bg: "bg-[#F8FAFC]", text: "text-[#475569]", border: "border-[#E2E8F0]" },
 ];
 
@@ -114,10 +114,10 @@ export function ExperienceSection({ content }: { content: ExperienceContent }) {
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-10 flex flex-col items-center text-center"
         >
-          <p className="mb-3 flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#16A34A]">
-            <span className="h-px w-[20px] bg-[#16A34A]" />
+          <p className="mb-3 flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#00B2A9]">
+            <span className="h-px w-[20px] bg-[#00B2A9]" />
             Trayectoria comprobada
-            <span className="h-px w-[20px] bg-[#16A34A]" />
+            <span className="h-px w-[20px] bg-[#00B2A9]" />
           </p>
           <h2 className="max-w-[460px] text-[32px] font-[800] leading-[1.15] tracking-[-0.04em] text-[#0F172A] sm:text-[42px]">
             {content.title}

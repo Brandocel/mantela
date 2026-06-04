@@ -28,7 +28,7 @@ function IllustrationPickup() {
           <stop offset="100%" stopColor="#1E3A2F"/>
         </linearGradient>
         <linearGradient id="truck-body" x1="60" y1="140" x2="260" y2="200" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#16A34A"/>
+          <stop offset="0%" stopColor="#00B2A9"/>
           <stop offset="100%" stopColor="#15803D"/>
         </linearGradient>
         <linearGradient id="textile-shine" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
@@ -60,10 +60,10 @@ function IllustrationPickup() {
       {/* Reflejo ventana */}
       <path d="M252 155 L265 155 L265 176 L252 176 Z" fill="#ffffff" fillOpacity="0.12"/>
       {/* Puerta camión */}
-      <rect x="200" y="152" width="42" height="34" rx="2" fill="#15803D" stroke="#166534" strokeWidth="1"/>
-      <circle cx="237" cy="169" r="3" fill="#BBF7D0"/>
+      <rect x="200" y="152" width="42" height="34" rx="2" fill="#15803D" stroke="#007A75" strokeWidth="1"/>
+      <circle cx="237" cy="169" r="3" fill="#99F6E4"/>
       {/* Línea de carga */}
-      <line x1="58" y1="171" x2="243" y2="171" stroke="#166534" strokeWidth="1.5" strokeDasharray="6 4"/>
+      <line x1="58" y1="171" x2="243" y2="171" stroke="#007A75" strokeWidth="1.5" strokeDasharray="6 4"/>
 
       {/* Ruedas */}
       <circle cx="105" cy="192" r="18" fill="#1E293B"/>
@@ -91,15 +91,15 @@ function IllustrationPickup() {
       <line x1="216" y1="112" x2="216" y2="148" stroke="#E2E8F0" strokeWidth="1.5"/>
 
       {/* Etiqueta verde en paquete */}
-      <rect x="76" y="116" width="22" height="8" rx="2" fill="#16A34A"/>
-      <rect x="134" y="109" width="26" height="8" rx="2" fill="#16A34A"/>
+      <rect x="76" y="116" width="22" height="8" rx="2" fill="#00B2A9"/>
+      <rect x="134" y="109" width="26" height="8" rx="2" fill="#00B2A9"/>
 
       {/* Flechas de movimiento */}
-      <path d="M340 150 L360 150 M354 143 L362 150 L354 157" stroke="#16A34A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fillOpacity="0.6"/>
-      <path d="M340 165 L355 165 M350 160 L357 165 L350 170" stroke="#16A34A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fillOpacity="0.4"/>
+      <path d="M340 150 L360 150 M354 143 L362 150 L354 157" stroke="#00B2A9" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fillOpacity="0.6"/>
+      <path d="M340 165 L355 165 M350 160 L357 165 L350 170" stroke="#00B2A9" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fillOpacity="0.4"/>
 
       {/* Destello en el camión */}
-      <ellipse cx="180" cy="148" rx="80" ry="6" fill="#16A34A" fillOpacity="0.12"/>
+      <ellipse cx="180" cy="148" rx="80" ry="6" fill="#00B2A9" fillOpacity="0.12"/>
     </svg>
   );
 }
@@ -114,8 +114,8 @@ function IllustrationProcess() {
           <stop offset="100%" stopColor="#1A2942"/>
         </linearGradient>
         <radialGradient id="drum-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#16A34A" stopOpacity="0.15"/>
-          <stop offset="100%" stopColor="#16A34A" stopOpacity="0"/>
+          <stop offset="0%" stopColor="#00B2A9" stopOpacity="0.15"/>
+          <stop offset="100%" stopColor="#00B2A9" stopOpacity="0"/>
         </radialGradient>
         <linearGradient id="machine-front" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
           <stop offset="0%" stopColor="#1E293B"/>
@@ -139,18 +139,18 @@ function IllustrationProcess() {
       <rect x="28" y="68" width="130" height="28" rx="8" fill="#0F172A"/>
       <rect x="28" y="82" width="130" height="14" fill="#0F172A"/>
       {/* Botones panel */}
-      <circle cx="50"  cy="79" r="5" fill="#16A34A"/>
+      <circle cx="50"  cy="79" r="5" fill="#00B2A9"/>
       <circle cx="50"  cy="79" r="2.5" fill="#22C55E"/>
       <circle cx="68"  cy="79" r="5" fill="#334155"/>
       <circle cx="86"  cy="79" r="5" fill="#334155"/>
       <rect x="100" y="74" width="40" height="10" rx="2" fill="#0F172A" stroke="#334155" strokeWidth="1"/>
-      <rect x="102" y="76" width="20" height="6" rx="1" fill="#16A34A" fillOpacity="0.7"/>
+      <rect x="102" y="76" width="20" height="6" rx="1" fill="#00B2A9" fillOpacity="0.7"/>
       {/* Tambor circular */}
       <circle cx="93" cy="148" r="46" fill="#0F172A" stroke="#334155" strokeWidth="2"/>
       <circle cx="93" cy="148" r="38" fill="url(#drum-glow)" stroke="#1E293B" strokeWidth="1.5"/>
       <circle cx="93" cy="148" r="38" fill="#0F172A" fillOpacity="0.4"/>
       {/* Ventana del tambor */}
-      <circle cx="93" cy="148" r="30" fill="#0B1628" stroke="#16A34A" strokeWidth="1.5" strokeOpacity="0.6"/>
+      <circle cx="93" cy="148" r="30" fill="#0B1628" stroke="#00B2A9" strokeWidth="1.5" strokeOpacity="0.6"/>
       {/* Ropa dentro */}
       <path d="M72 138 Q93 128 114 138 Q107 158 93 162 Q79 158 72 138Z" fill="#F1F5F9" fillOpacity="0.15"/>
       <path d="M75 152 Q93 145 111 152" stroke="#F1F5F9" strokeWidth="2" strokeOpacity="0.2" fill="none"/>
@@ -178,7 +178,7 @@ function IllustrationProcess() {
       <circle cx="234" cy="97"  r="4" fill="#F59E0B" fillOpacity="0.7"/>
       <circle cx="248" cy="97"  r="4" fill="#334155"/>
       <circle cx="255" cy="142" r="34" fill="#0F172A" stroke="#334155" strokeWidth="2"/>
-      <circle cx="255" cy="142" r="26" fill="#0B1628" stroke="#16A34A" strokeWidth="1.2" strokeOpacity="0.5"/>
+      <circle cx="255" cy="142" r="26" fill="#0B1628" stroke="#00B2A9" strokeWidth="1.2" strokeOpacity="0.5"/>
       {/* Espiral dentro secadora */}
       <path d="M255 120 Q275 120 278 142 Q278 162 255 164 Q232 164 232 142 Q232 128 248 122" stroke="#334155" strokeWidth="2" fill="none"/>
       <circle cx="255" cy="142" r="5" fill="#334155"/>
@@ -187,15 +187,15 @@ function IllustrationProcess() {
 
       {/* Tuberías / conexiones */}
       <path d="M158 108 Q180 108 180 130 L180 158 Q180 170 200 170" stroke="#334155" strokeWidth="4" fill="none" strokeLinecap="round"/>
-      <path d="M158 108 Q180 108 180 130 L180 158 Q180 170 200 170" stroke="#16A34A" strokeWidth="1.5" strokeOpacity="0.4" fill="none" strokeLinecap="round" strokeDasharray="6 5"/>
+      <path d="M158 108 Q180 108 180 130 L180 158 Q180 170 200 170" stroke="#00B2A9" strokeWidth="1.5" strokeOpacity="0.4" fill="none" strokeLinecap="round" strokeDasharray="6 5"/>
 
       {/* Burbujas flotando */}
       <circle cx="170" cy="55"  r="8"   fill="#BAE6FD" fillOpacity="0.12" stroke="#BAE6FD" strokeWidth="0.8" strokeOpacity="0.25"/>
       <circle cx="185" cy="35"  r="5"   fill="#BAE6FD" fillOpacity="0.1"  stroke="#BAE6FD" strokeWidth="0.8" strokeOpacity="0.2"/>
       <circle cx="155" cy="30"  r="11"  fill="#BAE6FD" fillOpacity="0.08" stroke="#BAE6FD" strokeWidth="0.8" strokeOpacity="0.18"/>
-      <circle cx="340" cy="48"  r="7"   fill="#16A34A" fillOpacity="0.1"  stroke="#16A34A" strokeWidth="0.8" strokeOpacity="0.2"/>
-      <circle cx="358" cy="68"  r="4.5" fill="#16A34A" fillOpacity="0.08"/>
-      <circle cx="330" cy="72"  r="3"   fill="#16A34A" fillOpacity="0.1"/>
+      <circle cx="340" cy="48"  r="7"   fill="#00B2A9" fillOpacity="0.1"  stroke="#00B2A9" strokeWidth="0.8" strokeOpacity="0.2"/>
+      <circle cx="358" cy="68"  r="4.5" fill="#00B2A9" fillOpacity="0.08"/>
+      <circle cx="330" cy="72"  r="3"   fill="#00B2A9" fillOpacity="0.1"/>
 
       {/* Vapor */}
       <path d="M320 92 Q324 82 320 72" stroke="#94A3B8" strokeWidth="1.5" strokeOpacity="0.3" fill="none" strokeLinecap="round"/>
@@ -219,7 +219,7 @@ function IllustrationDelivery() {
           <stop offset="100%" stopColor="#E2E8F0"/>
         </linearGradient>
         <linearGradient id="badge-glow" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
-          <stop offset="0%" stopColor="#16A34A"/>
+          <stop offset="0%" stopColor="#00B2A9"/>
           <stop offset="100%" stopColor="#15803D"/>
         </linearGradient>
       </defs>
@@ -246,8 +246,8 @@ function IllustrationDelivery() {
       <line x1="64" y1="165" x2="144" y2="165" stroke="#CBD5E1" strokeWidth="1" strokeOpacity="0.7"/>
       <line x1="64" y1="169" x2="144" y2="169" stroke="#CBD5E1" strokeWidth="0.8" strokeOpacity="0.4"/>
       {/* Cinta de embalaje */}
-      <rect x="96" y="128" width="16" height="48" rx="2" fill="#16A34A" fillOpacity="0.35"/>
-      <rect x="64" y="160" width="80" height="6"  rx="1" fill="#16A34A" fillOpacity="0.35"/>
+      <rect x="96" y="128" width="16" height="48" rx="2" fill="#00B2A9" fillOpacity="0.35"/>
+      <rect x="64" y="160" width="80" height="6"  rx="1" fill="#00B2A9" fillOpacity="0.35"/>
 
       {/* Caja de textiles — centro */}
       {/* Tapa */}
@@ -257,11 +257,11 @@ function IllustrationDelivery() {
       {/* Lateral izquierdo */}
       <path d="M140 122 L155 105 L155 161 L140 178 Z" fill="#E2E8F0" fillOpacity="0.7"/>
       {/* Cinta caja */}
-      <rect x="190" y="105" width="20" height="73" fill="#16A34A" fillOpacity="0.25"/>
-      <rect x="140" y="148" width="120" height="8" fill="#16A34A" fillOpacity="0.25"/>
+      <rect x="190" y="105" width="20" height="73" fill="#00B2A9" fillOpacity="0.25"/>
+      <rect x="140" y="148" width="120" height="8" fill="#00B2A9" fillOpacity="0.25"/>
       {/* Logo en caja */}
       <rect x="162" y="132" width="56" height="24" rx="3" fill="#0F172A" fillOpacity="0.1"/>
-      <text x="190" y="148" textAnchor="middle" fill="#16A34A" fontSize="9" fontWeight="800" fontFamily="system-ui" fillOpacity="0.8">La Mantela</text>
+      <text x="190" y="148" textAnchor="middle" fill="#00B2A9" fontSize="9" fontWeight="800" fontFamily="system-ui" fillOpacity="0.8">La Mantela</text>
 
       {/* Toallas dobladas — derecha */}
       <rect x="262" y="130" width="78" height="20" rx="3" fill="#F8FAFC" fillOpacity="0.9"/>
@@ -270,26 +270,26 @@ function IllustrationDelivery() {
       <rect x="264" y="148" width="74" height="16" rx="3" fill="#F1F5F9" fillOpacity="0.85"/>
       <rect x="266" y="162" width="70" height="13" rx="3" fill="#E2E8F0" fillOpacity="0.75"/>
       {/* Cinta verde lateral */}
-      <rect x="293" y="130" width="14" height="45" rx="2" fill="#16A34A" fillOpacity="0.3"/>
+      <rect x="293" y="130" width="14" height="45" rx="2" fill="#00B2A9" fillOpacity="0.3"/>
 
       {/* Badge de verificación grande — flotando */}
       <circle cx="200" cy="68" r="32" fill="url(#badge-glow)" fillOpacity="0.15"/>
       <circle cx="200" cy="68" r="26" fill="url(#badge-glow)"/>
-      <circle cx="200" cy="68" r="26" fill="#166534" fillOpacity="0.3"/>
+      <circle cx="200" cy="68" r="26" fill="#007A75" fillOpacity="0.3"/>
       {/* Check mark */}
       <path d="M186 68 L196 78 L216 56" stroke="white" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
       {/* Anillo exterior */}
-      <circle cx="200" cy="68" r="31" stroke="#16A34A" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="4 3"/>
+      <circle cx="200" cy="68" r="31" stroke="#00B2A9" strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="4 3"/>
 
       {/* Estrella / destellos alrededor del badge */}
-      <path d="M234 44 L236 40 L238 44 L242 46 L238 48 L236 52 L234 48 L230 46 Z" fill="#16A34A" fillOpacity="0.5"/>
-      <path d="M162 52 L163.5 48.5 L165 52 L168.5 53.5 L165 55 L163.5 58.5 L162 55 L158.5 53.5 Z" fill="#16A34A" fillOpacity="0.35"/>
+      <path d="M234 44 L236 40 L238 44 L242 46 L238 48 L236 52 L234 48 L230 46 Z" fill="#00B2A9" fillOpacity="0.5"/>
+      <path d="M162 52 L163.5 48.5 L165 52 L168.5 53.5 L165 55 L163.5 58.5 L162 55 L158.5 53.5 Z" fill="#00B2A9" fillOpacity="0.35"/>
       <circle cx="245" cy="72" r="2.5" fill="#22C55E" fillOpacity="0.6"/>
       <circle cx="158" cy="65" r="2"   fill="#22C55E" fillOpacity="0.4"/>
 
       {/* Etiquetas de calidad flotantes */}
       <rect x="18" y="80" width="72" height="22" rx="11" fill="#1E293B" stroke="#334155" strokeWidth="1"/>
-      <circle cx="32" cy="91" r="5" fill="#16A34A" fillOpacity="0.8"/>
+      <circle cx="32" cy="91" r="5" fill="#00B2A9" fillOpacity="0.8"/>
       <rect x="42" y="86" width="40" height="5" rx="2" fill="#475569"/>
       <rect x="42" y="94" width="28" height="4" rx="2" fill="#334155"/>
 
@@ -302,7 +302,7 @@ function IllustrationDelivery() {
 }
 
 const ILLUSTRATIONS = [IllustrationPickup, IllustrationProcess, IllustrationDelivery];
-const ACCENT_COLORS = ["#16A34A", "#0EA5E9", "#F59E0B"];
+const ACCENT_COLORS = ["#00B2A9", "#0EA5E9", "#F59E0B"];
 const BG_COLORS     = ["from-[#0F172A] to-[#1E3A2F]", "from-[#0F172A] to-[#1A2942]", "from-[#0F172A] to-[#0F2A1A]"];
 
 function StepCard({ item, index }: {
@@ -310,7 +310,7 @@ function StepCard({ item, index }: {
   index: number;
 }) {
   const Illustration = ILLUSTRATIONS[index] ?? IllustrationPickup;
-  const accent = ACCENT_COLORS[index] ?? "#16A34A";
+  const accent = ACCENT_COLORS[index] ?? "#00B2A9";
 
   return (
     <motion.article
@@ -414,10 +414,10 @@ export function ProcessSection({ content }: { content: ProcessContent }) {
           transition={{ duration: 0.6, ease: EASE }}
           className="mb-14 text-center"
         >
-          <p className="mb-3 inline-flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#16A34A]">
-            <span className="h-px w-[20px] bg-[#16A34A]" />
+          <p className="mb-3 inline-flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#00B2A9]">
+            <span className="h-px w-[20px] bg-[#00B2A9]" />
             Flujo de trabajo
-            <span className="h-px w-[20px] bg-[#16A34A]" />
+            <span className="h-px w-[20px] bg-[#00B2A9]" />
           </p>
           <h2 className="mx-auto max-w-[460px] text-[34px] font-[800] leading-[1.12] tracking-[-0.04em] text-[#0F172A] sm:text-[46px]">
             Cómo Funciona<br />Nuestro Servicio

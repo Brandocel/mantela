@@ -34,7 +34,7 @@ export function AboutSection({ content }: { content: AboutContent }) {
             whileInView={{ scaleY: 1 }}
             viewport={VP}
             transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
-            className="absolute right-0 top-[80px] h-[240px] w-[3px] origin-top rounded-full bg-[#16A34A]"
+            className="absolute right-0 top-[80px] h-[240px] w-[3px] origin-top rounded-full bg-[#00B2A9]"
           />
 
           {/* Foto */}
@@ -54,8 +54,8 @@ export function AboutSection({ content }: { content: AboutContent }) {
           viewport={VP}
           transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
         >
-          <p className="mb-5 flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#16A34A]">
-            <span className="h-px w-[20px] bg-[#16A34A]" />
+          <p className="mb-5 flex items-center gap-3 text-[10px] font-[700] uppercase tracking-[0.2em] text-[#00B2A9]">
+            <span className="h-px w-[20px] bg-[#00B2A9]" />
             Nuestra identidad
           </p>
 
@@ -78,7 +78,7 @@ export function AboutSection({ content }: { content: AboutContent }) {
                 {i === active && (
                   <motion.span
                     layoutId="tab-indicator"
-                    className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-[#16A34A]"
+                    className="absolute bottom-0 left-0 h-[2px] w-full rounded-full bg-[#00B2A9]"
                     transition={SPRING}
                   />
                 )}
@@ -107,9 +107,9 @@ export function AboutSection({ content }: { content: AboutContent }) {
                     transition={{ ...SPRING, delay: i * 0.06 }}
                     className="flex items-center gap-3"
                   >
-                    <span className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full bg-[#F0FDF4]">
+                    <span className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full bg-[#F0FDFC]">
                       <svg viewBox="0 0 12 12" fill="none" className="h-[9px] w-[9px]" aria-hidden>
-                        <path d="M2 6l2.5 2.5 5.5-5" stroke="#16A34A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M2 6l2.5 2.5 5.5-5" stroke="#00B2A9" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </span>
                     <span className="text-[14px] font-[600] text-[#0F172A]">{point}</span>
