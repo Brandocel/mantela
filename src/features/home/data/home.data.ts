@@ -26,7 +26,7 @@ export const homeContent: HomeContent = {
     buttonLabel: "Solicitar cotización vía WhatsApp",
     buttonHref: whatsappUrl,
     image: "/images/hero/DSC500-1050.jpg",
-    video: "/images/hero/456301_Laundry_Wash_1920x1080.mp4",
+    video: "/images/hero/Timeline 1.mov",
   },
 
   services: {
