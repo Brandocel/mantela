@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ServiceItem, ServicesContent } from "@/features/home/types/home.types";
@@ -10,19 +11,31 @@ const SPRING = { type: "spring", stiffness: 340, damping: 30 } as const;
 
 const listVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+  visible: { transition: { staggerChildren: 0.12 } },
 };
 const itemVariants = {
-  hidden:  { opacity: 0, x: 10 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
+  hidden:  { opacity: 0, x: 16 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.55, ease: EASE } },
 };
 
-function ServiceCard({ service, featured = false }: { service: ServiceItem; featured?: boolean }) {
+/* Flotación continua del ícono */
+const floatVariants = {
+  rest: { y: 0 },
+  float: {
+    y: [-2, 2, -2],
+    transition: { duration: 2.8, ease: "easeInOut", repeat: Infinity },
+  },
+};
+
+function ServiceCard({ service, featured = false, floatDelay = 0 }: { service: ServiceItem; featured?: boolean; floatDelay?: number }) {
   return (
     <motion.article
       variants={itemVariants}
-      /* Emil: spring whileHover — lift sutil */
-      whileHover={featured ? { y: -4, boxShadow: "0 12px_36px_rgba(15,23,42,0.1),0 0 0 1px #CBD5E1" } : { backgroundColor: "#F8FAFC" }}
+      whileHover={
+        featured
+          ? { y: -5, boxShadow: "0 16px 40px rgba(15,23,42,0.12), 0 0 0 1px #BBF7D0" }
+          : { y: -3, backgroundColor: "#F0FDF4", boxShadow: "0 4px 20px rgba(22,163,74,0.08)" }
+      }
       transition={SPRING}
       className={`group flex gap-5 rounded-xl ${
         featured
@@ -30,16 +43,29 @@ function ServiceCard({ service, featured = false }: { service: ServiceItem; feat
           : "p-5"
       }`}
     >
+      {/* Línea verde con pulso en featured */}
       {featured && (
-        <span className="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full bg-[#16A34A]" />
+        <>
+          <span className="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full bg-[#16A34A]" />
+          <motion.span
+            className="absolute left-0 top-6 bottom-6 w-[3px] rounded-r-full bg-[#16A34A]"
+            animate={{ opacity: [1, 0.3, 1] }}
+            transition={{ duration: 2, ease: "easeInOut", repeat: Infinity }}
+          />
+        </>
       )}
 
+      {/* Ícono con flotación continua */}
       <motion.div
         className={`relative mt-[2px] h-[40px] w-[40px] shrink-0 overflow-hidden rounded-lg ${
           featured ? "bg-[#F0FDF4]" : "bg-[#F8FAFC]"
         }`}
-        whileHover={{ scale: 1.1, rotate: 4 }}
-        transition={SPRING}
+        variants={floatVariants}
+        initial="rest"
+        animate="float"
+        style={{ animationDelay: `${floatDelay}s` } as React.CSSProperties}
+        whileHover={{ scale: 1.18, rotate: 6 }}
+        transition={{ ...SPRING, delay: floatDelay }}
       >
         <Image src={service.icon} alt={service.iconAlt} fill sizes="40px" className="object-contain p-2" />
       </motion.div>
@@ -113,9 +139,9 @@ export function ServicesSection({ content }: { content: ServicesContent }) {
             viewport={VP}
             className="flex flex-col justify-center gap-[10px] lg:-mt-[80px]"
           >
-            {first  && <ServiceCard service={first}  featured />}
-            {second && <ServiceCard service={second} />}
-            {third  && <ServiceCard service={third}  />}
+            {first  && <ServiceCard service={first}  featured floatDelay={0}   />}
+            {second && <ServiceCard service={second}         floatDelay={0.6} />}
+            {third  && <ServiceCard service={third}          floatDelay={1.2} />}
           </motion.div>
         </div>
 

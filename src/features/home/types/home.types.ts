@@ -64,6 +64,8 @@ export type NavItem = {
   export type IndustryLogo = {
     name: string;
     category: string;
+    image?: string;
+    darkBg?: boolean;
   };
 
   export type ExperienceContent = {

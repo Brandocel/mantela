@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ExperienceContent } from "@/features/home/types/home.types";
 
@@ -15,10 +16,14 @@ const CIRCLE_VARIANTS = [
 
 function LogoCircle({
   name,
+  image,
+  darkBg,
   colorIndex,
 }: {
   name: string;
   category: string;
+  image?: string;
+  darkBg?: boolean;
   colorIndex: number;
 }) {
   const words = name.split(" ").filter((w) => w.length > 1);
@@ -31,11 +36,23 @@ function LogoCircle({
   return (
     <div className="flex shrink-0 flex-col items-center gap-[10px]">
       <div
-        className={`flex h-[88px] w-[88px] items-center justify-center rounded-full border text-[17px] font-[800] tracking-[0.01em] select-none transition-transform duration-200 hover:scale-[1.06] ${v.bg} ${v.text} ${v.border}`}
+        className={`flex h-[88px] w-[88px] shrink-0 items-center justify-center overflow-hidden rounded-full border select-none transition-transform duration-200 hover:scale-[1.06] ${darkBg ? "bg-[#1a1a1a] border-[#333]" : `${v.bg} ${v.border}`}`}
         title={name}
         aria-label={name}
       >
-        {initials}
+        {image ? (
+          <Image
+            src={image}
+            alt={name}
+            width={88}
+            height={88}
+            className="h-full w-full object-contain p-2"
+          />
+        ) : (
+          <span className={`text-[17px] font-[800] tracking-[0.01em] ${v.text}`}>
+            {initials}
+          </span>
+        )}
       </div>
       <p className="w-[100px] text-center text-[10px] font-[600] leading-[14px] text-[#334155]">
         {name}
@@ -74,6 +91,8 @@ function MarqueeRow({
             key={`${logo.name}-${i}`}
             name={logo.name}
             category={logo.category}
+            image={logo.image}
+            darkBg={logo.darkBg}
             colorIndex={i % 4}
           />
         ))}
