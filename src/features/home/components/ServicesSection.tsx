@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { ServiceItem, ServicesContent } from "@/features/home/types/home.types";
@@ -18,14 +17,6 @@ const itemVariants = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.55, ease: EASE } },
 };
 
-/* Flotación continua del ícono */
-const floatVariants = {
-  rest: { y: 0 },
-  float: {
-    y: [-2, 2, -2],
-    transition: { duration: 2.8, ease: "easeInOut", repeat: Infinity },
-  },
-};
 
 function ServiceCard({ service, featured = false, floatDelay = 0 }: { service: ServiceItem; featured?: boolean; floatDelay?: number }) {
   return (
@@ -60,12 +51,9 @@ function ServiceCard({ service, featured = false, floatDelay = 0 }: { service: S
         className={`relative mt-[2px] h-[40px] w-[40px] shrink-0 overflow-hidden rounded-lg ${
           featured ? "bg-[#F0FDF4]" : "bg-[#F8FAFC]"
         }`}
-        variants={floatVariants}
-        initial="rest"
-        animate="float"
-        style={{ animationDelay: `${floatDelay}s` } as React.CSSProperties}
+        animate={{ y: [-2, 2, -2] }}
+        transition={{ duration: 2.8, ease: "easeInOut" as const, repeat: Infinity, delay: floatDelay }}
         whileHover={{ scale: 1.18, rotate: 6 }}
-        transition={{ ...SPRING, delay: floatDelay }}
       >
         <Image src={service.icon} alt={service.iconAlt} fill sizes="40px" className="object-contain p-2" />
       </motion.div>
